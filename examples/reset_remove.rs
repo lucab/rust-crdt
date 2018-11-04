@@ -3,16 +3,15 @@ extern crate crdts;
 use crdts::{CvRDT, CmRDT, Map, Orswot};
 
 fn main() {
-    let mut map: Map<String, Orswot<String, u8>, u8> = Map::new();
-    let add_ctx = map
-        .len()
+    let mut friend_map: Map<String, Orswot<String, u8>, u8> = Map::new();
+    let add_ctx = friend_map.len()
         .derive_add_ctx(1);
 
     {
-        let op = map.update(
+        let op = friend_map.update(
             "bob",
             add_ctx,
-            |set, c| set.add("is feeling O.K.", c)
+            |set, ctx| set.add("janet", ctx)
         );
         map.apply(&op);
     }
